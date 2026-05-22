@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const API_URL = "http://127.0.0.1:5000";
+// const API_URL = "https://unarbitrarily-impostrous-dino.ngrok-free.dev";
 
 function AudioDetector() {
   const [file, setFile] = useState(null);
@@ -34,6 +35,12 @@ function AudioDetector() {
     setIsLoading(true);
     try {
       const response = await axios.post(`${API_URL}/predict/audio`, formData);
+      // const response = await axios.post(`${API_URL}/predict/audio`, formData, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //     "ngrok-skip-browser-warning": "true",
+      //   },
+      // });
       setResult(response.data);
     } catch (err) {
       setError(

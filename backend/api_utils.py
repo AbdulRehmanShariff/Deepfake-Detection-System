@@ -171,15 +171,17 @@ import json
 
 # --- CONFIGURATION ---
 # This is your working API key.
-GEMINI_API_KEY = "AIzaSyAPEgKZIpStwg1J1b561vfiFaN2HmahUQQ" 
+GEMINI_API_KEY = "AIzaSyD9lbkPUsvjW-7FaH0XAe_ju8p6u-R_gS8" 
 
 try:
     genai.configure(api_key=GEMINI_API_KEY)
     
     # --- THIS IS THE FINAL FIX ---
     # We are using the model name 'gemini-pro-latest' which you confirmed is working.
-    FORENSIC_MODEL = genai.GenerativeModel('gemini-pro-latest') 
-    CHATBOT_MODEL = genai.GenerativeModel('gemini-pro-latest')
+    # FORENSIC_MODEL = genai.GenerativeModel('gemini-pro') 
+    # CHATBOT_MODEL = genai.GenerativeModel('gemini-pro')
+    FORENSIC_MODEL = genai.GenerativeModel('gemini-2.5-flash') 
+    CHATBOT_MODEL = genai.GenerativeModel('gemini-2.5-flash')
     # --- END OF FIX ---
 
     print("✅ Gemini Models configured successfully.")

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const API_URL = "http://127.0.0.1:5000";
+// const API_URL = "https://unarbitrarily-impostrous-dino.ngrok-free.dev";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
@@ -29,6 +30,16 @@ function Chatbot() {
       const response = await axios.post(`${API_URL}/chat`, {
         message: userMessage,
       });
+      // const response = await axios.post(
+      //   `${API_URL}/chat`,
+      //   { message: userMessage },
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       "ngrok-skip-browser-warning": "true",
+      //     },
+      //   }
+      // );
       setMessages((prev) => [
         ...prev,
         { sender: "bot", text: response.data.response },

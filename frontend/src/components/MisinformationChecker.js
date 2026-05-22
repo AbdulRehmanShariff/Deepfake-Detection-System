@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const API_URL = "http://127.0.0.1:5000";
+// const API_URL = "https://unarbitrarily-impostrous-dino.ngrok-free.dev";
 
 function MisinformationChecker() {
   const [text, setText] = useState("");
@@ -25,9 +26,19 @@ function MisinformationChecker() {
     setError("");
     setResult(null);
     try {
-      const response = await axios.post(`${API_URL}/predict/misinformation`, {
-        text,
-      });
+      // const response = await axios.post(`${API_URL}/predict/misinformation`, {
+      //   text,
+      // });
+      const response = await axios.post(
+        `${API_URL}/predict/misinformation`,
+        { text },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+        }
+      );
       if (response.data.result === "error") {
         setError(response.data.message);
       } else {

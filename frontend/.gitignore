@@ -1,16 +1,66 @@
-# Ignore React huge dependency folders
+# =========================
+# React / Frontend
+# =========================
 node_modules/
 build/
-.DS_Store
+dist/
 
-# Ignore Python cache
+# =========================
+# Python
+# =========================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Ignore heavy Model files (Too big for GitHub)
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# =========================
+# Deep Learning Models
+# =========================
 *.h5
 *.keras
+*.pt
+*.pth
+*.ckpt
+
+# Ignore model folders
+models/
 backend/models/
 
-# Ignore system files
+# =========================
+# Dataset Files
+# =========================
+dataset/
+datasets/
+data/
+
+# Videos / Images (optional)
+*.mp4
+*.avi
+*.mov
+
+# =========================
+# Environment Variables
+# =========================
 .env
+
+# =========================
+# Jupyter Notebook Cache
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# OS / Editor Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# JetBrains / PyCharm
+.idea/

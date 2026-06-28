@@ -2,7 +2,6 @@
 # import json
 
 
-# # GEMINI_API_KEY = "AIzaSyD9lbkPUsvjW-7FaH0XAe_ju8p6u-R_gS8" 
 # GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"  
 
 # try:
@@ -20,7 +19,8 @@ import os
 import google.generativeai as genai
 import json
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"  
 
 try:
     genai.configure(api_key=GEMINI_API_KEY)

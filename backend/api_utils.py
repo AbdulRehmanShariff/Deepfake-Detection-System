@@ -1,19 +1,37 @@
+# import google.generativeai as genai
+# import json
+
+
+# # GEMINI_API_KEY = "AIzaSyD9lbkPUsvjW-7FaH0XAe_ju8p6u-R_gS8" 
+# GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"  
+
+# try:
+#     genai.configure(api_key=GEMINI_API_KEY)
+
+#     FORENSIC_MODEL = genai.GenerativeModel('gemini-2.5-flash') 
+#     CHATBOT_MODEL = genai.GenerativeModel('gemini-2.5-flash')
+
+#     print(" Gemini Models configured successfully.")
+# except Exception as e:
+#     print(f" ERROR: Gemini API configuration failed. Check your API key. Error: {e}")
+#     FORENSIC_MODEL = None
+#     CHATBOT_MODEL = None
+import os
 import google.generativeai as genai
 import json
 
-
-# GEMINI_API_KEY = "AIzaSyD9lbkPUsvjW-7FaH0XAe_ju8p6u-R_gS8" 
-GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"  
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 try:
     genai.configure(api_key=GEMINI_API_KEY)
 
-    FORENSIC_MODEL = genai.GenerativeModel('gemini-2.5-flash') 
-    CHATBOT_MODEL = genai.GenerativeModel('gemini-2.5-flash')
+    FORENSIC_MODEL = genai.GenerativeModel("gemini-2.5-flash")
+    CHATBOT_MODEL = genai.GenerativeModel("gemini-2.5-flash")
 
-    print(" Gemini Models configured successfully.")
+    print("✅ Gemini Models configured successfully.")
+
 except Exception as e:
-    print(f" ERROR: Gemini API configuration failed. Check your API key. Error: {e}")
+    print(f"❌ ERROR: Gemini API configuration failed: {e}")
     FORENSIC_MODEL = None
     CHATBOT_MODEL = None
 

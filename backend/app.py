@@ -12,8 +12,7 @@ from api_utils import check_misinformation, get_chatbot_response
 # --- FLASK SETUP ---
 app = Flask(__name__)
 CORS(app)
-# app = Flask(__name__)
-# CORS(app, resources={r"/*": {"origins": "*"}})
+
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)

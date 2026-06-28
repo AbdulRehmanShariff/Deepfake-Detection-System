@@ -1,66 +1,107 @@
-# =========================
-# React / Frontend
-# =========================
-node_modules/
-build/
+
+# node_modules/
+# build/
+# dist/
+
+
+# __pycache__/
+# *.pyc
+# *.pyo
+# *.pyd
+
+
+# venv/
+# env/
+# .venv/
+
+
+# *.h5
+# *.keras
+# *.pt
+# *.pth
+# *.ckpt
+
+
+# models/
+# backend/models/
+
+
+# dataset/
+# datasets/
+# data/
+
+
+# *.mp4
+# *.avi
+# *.mov
+
+# .env
+
+# .ipynb_checkpoints/
+
+
+# .DS_Store
+# Thumbs.db
+
+# # VS Code
+# .vscode/
+
+# # JetBrains / PyCharm
+# .idea/
+
+# ==========================
+# Node.js
+# ==========================
+frontend/node_modules/
+frontend/build/
 dist/
 
-# =========================
+# ==========================
 # Python
-# =========================
+# ==========================
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
-*.pyd
 
-# Virtual Environments
+# ==========================
+# Virtual Environment
+# ==========================
 venv/
 env/
 .venv/
 
-# =========================
-# Deep Learning Models
-# =========================
-*.h5
-*.keras
-*.pt
-*.pth
-*.ckpt
-
-# Ignore model folders
-models/
-backend/models/
-
-# =========================
-# Dataset Files
-# =========================
-dataset/
-datasets/
-data/
-
-# Videos / Images (optional)
-*.mp4
-*.avi
-*.mov
-
-# =========================
+# ==========================
 # Environment Variables
-# =========================
+# ==========================
 .env
+.env.*
 
-# =========================
-# Jupyter Notebook Cache
-# =========================
+# ==========================
+# Uploads (temporary user files)
+# ==========================
+backend/uploads/*
+
+# Keep the uploads folder
+!backend/uploads/.gitkeep
+
+# ==========================
+# Jupyter
+# ==========================
 .ipynb_checkpoints/
 
-# =========================
-# OS / Editor Files
-# =========================
+# ==========================
+# OS Files
+# ==========================
 .DS_Store
 Thumbs.db
 
-# VS Code
+# ==========================
+# Editors
+# ==========================
 .vscode/
-
-# JetBrains / PyCharm
 .idea/
+
+# ==========================
+# Logs
+# ==========================
+*.log

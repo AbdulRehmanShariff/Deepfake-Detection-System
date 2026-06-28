@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:5000";
-// const API_URL = "https://unarbitrarily-impostrous-dino.ngrok-free.dev";
+// const API_URL = "http://127.0.0.1:5000";
+const API_URL = "https://deepfake-detection-system-bwn3.onrender.com";
 
 function MisinformationChecker() {
   const [text, setText] = useState("");
@@ -37,7 +37,7 @@ function MisinformationChecker() {
             "Content-Type": "application/json",
             "ngrok-skip-browser-warning": "true",
           },
-        }
+        },
       );
       if (response.data.result === "error") {
         setError(response.data.message);
@@ -46,7 +46,7 @@ function MisinformationChecker() {
       }
     } catch (err) {
       setError(
-        "API Error. Please check your Gemini API key and backend server."
+        "API Error. Please check your Gemini API key and backend server.",
       );
     } finally {
       setIsLoading(false);
@@ -58,7 +58,7 @@ function MisinformationChecker() {
 
     let highlightedHtml = text;
     const sortedPoints = [...result.analysis_points].sort(
-      (a, b) => b.text_fragment.length - a.text_fragment.length
+      (a, b) => b.text_fragment.length - a.text_fragment.length,
     );
 
     sortedPoints.forEach((point) => {
@@ -75,7 +75,7 @@ function MisinformationChecker() {
                     </span>`;
         highlightedHtml = highlightedHtml.replace(
           new RegExp(escapeRegExp(point.text_fragment), "g"),
-          highlightedFragment
+          highlightedFragment,
         );
       }
     });

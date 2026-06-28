@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:5000";
-// const API_URL = "https://unarbitrarily-impostrous-dino.ngrok-free.dev";
+// const API_URL = "http://127.0.0.1:5000";
+const API_URL = "https://deepfake-detection-system-bwn3.onrender.com";
 
 function VideoDetector() {
   const [file, setFile] = useState(null);
@@ -44,7 +44,7 @@ function VideoDetector() {
       setResult(response.data);
     } catch (err) {
       setError(
-        "Analysis failed. Please ensure the backend is running and the file is valid."
+        "Analysis failed. Please ensure the backend is running and the file is valid.",
       );
     } finally {
       setIsLoading(false);

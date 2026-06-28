@@ -35,21 +35,24 @@ function ImageDetector() {
     setIsLoading(true);
     try {
       const response = await axios.post(`${API_URL}/predict/image`, formData);
-      // const response = await axios.post(`${API_URL}/predict/image`, formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //     "ngrok-skip-browser-warning": "true", // <--- THIS IS THE KEY FIX
-      //   },
-      // });
       setResult(response.data);
-    } catch (err) {
-      setError(
-        "Analysis failed. Please ensure the backend is running and the file is valid.",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    }catch (err) {
+  console.error("Backend Error:", err.response?.data);
+
+  setError(
+    err.response?.data?.message ||
+    err.response?.data?.reason ||
+    err.message
+  );
+}
+  //   } catch (err) {
+  //     setError(
+  //       "Analysis failed. Please ensure the backend is running and the file is valid.",
+  //     );
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleDragOver = (e) => {
     e.preventDefault();

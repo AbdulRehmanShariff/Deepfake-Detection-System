@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model # The only function we need
 
 # --- MODEL PARAMETERS ---
 # Make sure this points to your NEW, MODERN model file
-VIDEO_MODEL_PATH = 'models/video_model_v3.keras'
+VIDEO_MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'video_model_v3.keras')
 TARGET_SIZE = (224, 224)
 SEQUENCE_LENGTH = 20
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -46,7 +46,7 @@ def predict_video(file_path):
     if video_model is None:
         try:
             video_model = load_model(VIDEO_MODEL_PATH, compile=False)
-            print("✅ Video Model (loaded on first request).")
+            print("Video Model (loaded on first request).")
         except Exception as e:
             return {"result": "Error: Model not loaded.", "confidence": 0.0, "reason": str(e)}
 

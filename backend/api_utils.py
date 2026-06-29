@@ -28,10 +28,10 @@ try:
     FORENSIC_MODEL = genai.GenerativeModel("gemini-2.5-flash")
     CHATBOT_MODEL = genai.GenerativeModel("gemini-2.5-flash")
 
-    print("✅ Gemini Models configured successfully.")
+    print("Gemini Models configured successfully.")
 
 except Exception as e:
-    print(f"❌ ERROR: Gemini API configuration failed: {e}")
+    print(f"ERROR: Gemini API configuration failed: {e}")
     FORENSIC_MODEL = None
     CHATBOT_MODEL = None
 

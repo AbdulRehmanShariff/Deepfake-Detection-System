@@ -43,8 +43,12 @@ function VideoDetector() {
       // });
       setResult(response.data);
     } catch (err) {
+      console.error("Backend Error:", err.response?.data);
       setError(
-        "Analysis failed. Please ensure the backend is running and the file is valid.",
+        err.response?.data?.message ||
+        err.response?.data?.reason ||
+        err.message ||
+        "Analysis failed."
       );
     } finally {
       setIsLoading(false);

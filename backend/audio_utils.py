@@ -6,7 +6,8 @@ from tensorflow.keras.models import load_model # The only function we need
 
 # --- MODEL PARAMETERS ---
 # Make sure this points to your NEW, MODERN model file
-AUDIO_MODEL_PATH = 'models/audio_model_v3.keras' 
+import os
+AUDIO_MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'audio_model_v3.keras') 
 MAX_PAD_LEN = 216
 N_MFCC = 40
 DURATION = 5
@@ -33,7 +34,7 @@ def predict_audio(file_path):
         try:
             # This is the simplest and most reliable way
             audio_model = load_model(AUDIO_MODEL_PATH, compile=False)
-            print("✅ Audio Model (loaded on first request).")
+            print("Audio Model (loaded on first request).")
         except Exception as e:
             return {"result": "Error: Model not loaded.", "confidence": 0.0, "reason": str(e)}
 

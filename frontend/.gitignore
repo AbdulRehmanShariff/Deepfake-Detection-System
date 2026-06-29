@@ -52,8 +52,8 @@
 # ==========================
 # Node.js
 # ==========================
-frontend/node_modules/
-frontend/build/
+node_modules/
+build/
 dist/
 
 # ==========================

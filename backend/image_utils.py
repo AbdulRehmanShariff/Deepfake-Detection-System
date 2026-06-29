@@ -57,7 +57,8 @@ import numpy as np
 from tensorflow.keras.preprocessing import image
 
 # --- MODEL PARAMETERS ---
-IMAGE_MODEL_PATH = 'models/image_model_v3.keras'
+import os
+IMAGE_MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'image_model_v3.keras')
 TARGET_SIZE = (224, 224)
 PREDICTION_THRESHOLD = 0.35
 
@@ -76,7 +77,7 @@ def predict_image(file_path):
                 compile=False
             )
 
-            print("✅ Image model loaded successfully.")
+            print("Image model loaded successfully.")
 
         except Exception as e:
             return {

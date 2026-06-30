@@ -84,6 +84,19 @@ def chatbot_route():
     response = get_chatbot_response(message)
     return jsonify(response)
 
+@app.route("/debug/versions")
+def debug_versions():
+    import tensorflow as tf
+    import keras
+    import sys
+
+    return {
+        "tensorflow": tf.__version__,
+        "keras": keras.__version__,
+        "python": sys.version,
+        "keras_path": keras.__file__
+    }
+
 # --- START THE SERVER ---
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

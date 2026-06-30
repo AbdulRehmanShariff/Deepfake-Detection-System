@@ -1,4 +1,5 @@
 import os
+import hashlib
 import traceback
 
 import tensorflow as tf
@@ -17,21 +18,24 @@ IMAGE_MODEL_PATH = os.path.join(
 TARGET_SIZE = (224, 224)
 PREDICTION_THRESHOLD = 0.35
 
-# Load model only once
 image_model = None
 
 
 def predict_image(file_path):
     global image_model
 
-    # -----------------------------
-    # Load model (first request only)
-    # -----------------------------
     if image_model is None:
         try:
             print("=" * 60)
             print("Loading Image Model...")
             print("Model Path:", IMAGE_MODEL_PATH)
+            print("Exists:", os.path.exists(IMAGE_MODEL_PATH))
+
+            if os.path.exists(IMAGE_MODEL_PATH):
+                print("Size:", os.path.getsize(IMAGE_MODEL_PATH))
+
+                with open(IMAGE_MODEL_PATH, "rb") as f:
+                    print("SHA256:", hashlib.sha256(f.read()).hexdigest())
 
             image_model = tf.keras.models.load_model(
                 IMAGE_MODEL_PATH,
@@ -42,43 +46,12 @@ def predict_image(file_path):
             print("=" * 60)
 
         except Exception:
-            import traceback
-
             print("=" * 60)
             print("IMAGE MODEL LOAD ERROR")
             traceback.print_exc()
             print("=" * 60)
-
             raise
-    # if image_model is None:
-    #     try:
-    #         print("=" * 60)
-    #         print("Loading Image Model...")
-    #         print("Model Path:", IMAGE_MODEL_PATH)
 
-    #         image_model = tf.keras.models.load_model(
-    #             IMAGE_MODEL_PATH,
-    #             compile=False
-    #         )
-
-    #         print("Image model loaded successfully.")
-    #         print("=" * 60)
-
-    #     except Exception:
-    #         print("=" * 60)
-    #         print("IMAGE MODEL LOAD ERROR")
-    #         traceback.print_exc()
-    #         print("=" * 60)
-
-    #         return {
-    #             "result": "Error: Model not loaded.",
-    #             "confidence": 0.0,
-    #             "reason": traceback.format_exc()
-    #         }
-
-    # -----------------------------
-    # Prediction
-    # -----------------------------
     try:
         test_image = image.load_img(
             file_path,
@@ -96,10 +69,11 @@ def predict_image(file_path):
 
         prediction_value = float(prediction[0][0])
 
-        if prediction_value < PREDICTION_THRESHOLD:
-            label = "DEEPFAKE"
-        else:
-            label = "REAL"
+        label = (
+            "REAL"
+            if prediction_value >= PREDICTION_THRESHOLD
+            else "DEEPFAKE"
+        )
 
         return {
             "result": label,

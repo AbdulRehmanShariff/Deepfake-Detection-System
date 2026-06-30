@@ -91,39 +91,102 @@
 #             "confidence": 0.0,
 #             "reason": traceback.format_exc()
 #         }
+# import os
+# import hashlib
+# import traceback
+# import numpy as np
+# import keras  # FIX: use keras directly, NOT tf.keras
+
+# IMAGE_MODEL_PATH = os.path.join(
+#     os.path.dirname(os.path.abspath(__file__)),
+#     "models", "image_model_v3.keras"
+# )
+# TARGET_SIZE = (224, 224)
+# PREDICTION_THRESHOLD = 0.35
+# image_model = None
+
+# def predict_image(file_path):
+#     global image_model
+#     if image_model is None:
+#         try:
+#             print(f"Loading image model from: {IMAGE_MODEL_PATH}")
+#             print(f"File exists: {os.path.exists(IMAGE_MODEL_PATH)}")
+#             print(f"File size: {os.path.getsize(IMAGE_MODEL_PATH)} bytes")
+#             image_model = keras.models.load_model(IMAGE_MODEL_PATH, compile=False)  # FIX
+#             print("Image model loaded OK. Input shape:", image_model.input_shape)
+#         except Exception:
+#             traceback.print_exc()
+#             raise
+
+#     try:
+#         img = keras.utils.load_img(file_path, target_size=TARGET_SIZE)  # FIX
+#         arr = keras.utils.img_to_array(img)
+#         arr = np.expand_dims(arr, axis=0) / 255.0
+#         prediction = float(image_model.predict(arr, verbose=0)[0][0])
+#         label = "REAL" if prediction >= PREDICTION_THRESHOLD else "DEEPFAKE"
+#         return {"result": label, "confidence": round(prediction, 4)}
+#     except Exception:
+#         return {"result": "Prediction failed", "confidence": 0.0, "reason": traceback.format_exc()}
+
 import os
-import hashlib
 import traceback
 import numpy as np
-import keras  # FIX: use keras directly, NOT tf.keras
+import keras
 
 IMAGE_MODEL_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    "models", "image_model_v3.keras"
+    "models",
+    "image_model_v3.keras"
 )
+
 TARGET_SIZE = (224, 224)
 PREDICTION_THRESHOLD = 0.35
-image_model = None
+
+print("=" * 60)
+print(f"Loading image model at startup: {IMAGE_MODEL_PATH}")
+print(f"File exists: {os.path.exists(IMAGE_MODEL_PATH)}")
+
+if os.path.exists(IMAGE_MODEL_PATH):
+    print(f"File size: {os.path.getsize(IMAGE_MODEL_PATH)} bytes")
+
+try:
+    image_model = keras.models.load_model(IMAGE_MODEL_PATH, compile=False)
+    print("Image model loaded successfully at startup.")
+    print("Image model input shape:", image_model.input_shape)
+except Exception:
+    print("IMAGE MODEL STARTUP LOAD ERROR")
+    traceback.print_exc()
+    image_model = None
+
+print("=" * 60)
+
 
 def predict_image(file_path):
     global image_model
+
     if image_model is None:
-        try:
-            print(f"Loading image model from: {IMAGE_MODEL_PATH}")
-            print(f"File exists: {os.path.exists(IMAGE_MODEL_PATH)}")
-            print(f"File size: {os.path.getsize(IMAGE_MODEL_PATH)} bytes")
-            image_model = keras.models.load_model(IMAGE_MODEL_PATH, compile=False)  # FIX
-            print("Image model loaded OK. Input shape:", image_model.input_shape)
-        except Exception:
-            traceback.print_exc()
-            raise
+        return {
+            "result": "error",
+            "message": "Image model is not loaded.",
+            "confidence": 0.0
+        }
 
     try:
-        img = keras.utils.load_img(file_path, target_size=TARGET_SIZE)  # FIX
+        img = keras.utils.load_img(file_path, target_size=TARGET_SIZE)
         arr = keras.utils.img_to_array(img)
-        arr = np.expand_dims(arr, axis=0) / 255.0
+        arr = np.expand_dims(arr, axis=0).astype("float32") / 255.0
+
         prediction = float(image_model.predict(arr, verbose=0)[0][0])
         label = "REAL" if prediction >= PREDICTION_THRESHOLD else "DEEPFAKE"
-        return {"result": label, "confidence": round(prediction, 4)}
+
+        return {
+            "result": label,
+            "confidence": round(prediction, 4)
+        }
+
     except Exception:
-        return {"result": "Prediction failed", "confidence": 0.0, "reason": traceback.format_exc()}
+        return {
+            "result": "Prediction failed",
+            "confidence": 0.0,
+            "reason": traceback.format_exc()
+        }

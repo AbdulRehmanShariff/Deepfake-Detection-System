@@ -15,25 +15,48 @@
 #     print(f" ERROR: Gemini API configuration failed. Check your API key. Error: {e}")
 #     FORENSIC_MODEL = None
 #     CHATBOT_MODEL = None
+# import os
+# import google.generativeai as genai
+# import json
+
+# # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"  
+
+# try:
+#     genai.configure(api_key=GEMINI_API_KEY)
+
+#     FORENSIC_MODEL = genai.GenerativeModel("gemini-2.5-flash")
+#     CHATBOT_MODEL = genai.GenerativeModel("gemini-2.5-flash")
+
+#     print("Gemini Models configured successfully.")
+
+# except Exception as e:
+#     print(f"ERROR: Gemini API configuration failed: {e}")
+#     FORENSIC_MODEL = None
+#     CHATBOT_MODEL = None
 import os
-import google.generativeai as genai
 import json
+import google.generativeai as genai
 
-# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"  
+# FIX: read from environment variable — set this in Render dashboard
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
-try:
-    genai.configure(api_key=GEMINI_API_KEY)
+FORENSIC_MODEL = None
+CHATBOT_MODEL = None
 
-    FORENSIC_MODEL = genai.GenerativeModel("gemini-2.5-flash")
-    CHATBOT_MODEL = genai.GenerativeModel("gemini-2.5-flash")
+# FIX: only configure if key exists — prevents startup crash
+if GEMINI_API_KEY and GEMINI_API_KEY != "PASTE_YOUR_GEMINI_API_KEY_HERE":
+    try:
+        genai.configure(api_key=GEMINI_API_KEY)
+        FORENSIC_MODEL = genai.GenerativeModel("gemini-2.5-flash")
+        CHATBOT_MODEL = genai.GenerativeModel("gemini-2.5-flash")
+        print("Gemini Models configured successfully.")
+    except Exception as e:
+        print(f"ERROR: Gemini config failed: {e}")
+else:
+    print("WARNING: GEMINI_API_KEY not set. Chatbot and misinformation features disabled.")
 
-    print("Gemini Models configured successfully.")
-
-except Exception as e:
-    print(f"ERROR: Gemini API configuration failed: {e}")
-    FORENSIC_MODEL = None
-    CHATBOT_MODEL = None
+# keep your check_misinformation() and get_chatbot_response() functions unchanged below
 
 def check_misinformation(article_text):
     if FORENSIC_MODEL is None:

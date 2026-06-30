@@ -90,13 +90,12 @@ def debug_versions():
     import keras
     import sys
 
-    return {
+    return jsonify({
         "tensorflow": tf.__version__,
         "keras": keras.__version__,
         "python": sys.version,
-        "keras_path": keras.__file__
-    }
-
+        "keras_path": keras.__file__,
+    })
 # --- START THE SERVER ---
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

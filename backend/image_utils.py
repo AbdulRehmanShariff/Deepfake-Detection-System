@@ -42,16 +42,39 @@ def predict_image(file_path):
             print("=" * 60)
 
         except Exception:
+            import traceback
+
             print("=" * 60)
             print("IMAGE MODEL LOAD ERROR")
             traceback.print_exc()
             print("=" * 60)
 
-            return {
-                "result": "Error: Model not loaded.",
-                "confidence": 0.0,
-                "reason": traceback.format_exc()
-            }
+            raise
+    # if image_model is None:
+    #     try:
+    #         print("=" * 60)
+    #         print("Loading Image Model...")
+    #         print("Model Path:", IMAGE_MODEL_PATH)
+
+    #         image_model = tf.keras.models.load_model(
+    #             IMAGE_MODEL_PATH,
+    #             compile=False
+    #         )
+
+    #         print("Image model loaded successfully.")
+    #         print("=" * 60)
+
+    #     except Exception:
+    #         print("=" * 60)
+    #         print("IMAGE MODEL LOAD ERROR")
+    #         traceback.print_exc()
+    #         print("=" * 60)
+
+    #         return {
+    #             "result": "Error: Model not loaded.",
+    #             "confidence": 0.0,
+    #             "reason": traceback.format_exc()
+    #         }
 
     # -----------------------------
     # Prediction
